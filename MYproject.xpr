@@ -4,9 +4,8 @@ module Debounce(
     input clk_in,
     output led
     );
-    wire clk_out;//pb pushbutton he
+    wire clk_out;
     wire Q2,Q1,Q2_bar;
-    Slow_Clock U1(clk_in,clk_out);
     D_FF D1(clk_out,pb,Q1);
     D_FF D2(clk_out,Q1,Q2);
     assign Q2_bar=~Q2;
@@ -35,6 +34,34 @@ module Bnary_decimal(
    end  
 endmodule
 
+#Seven segment display Code:
+
+module Decoder_7_segment(
+     bcd,
+     seg
+    );
+     input [3:0] bcd;
+     output [6:0] seg;
+     reg [6:0] seg;
+    always @(bcd)
+    begin
+        case (bcd) 
+            0 : seg = 7'b0000001;
+            1 : seg = 7'b1001111;
+            2 : seg = 7'b0010010;
+            3 : seg = 7'b0000110;
+            4 : seg = 7'b1001100;
+            5 : seg = 7'b0100100;
+            6 : seg = 7'b0100000;
+            7 : seg = 7'b0001111;
+            8 : seg = 7'b0000000;
+            9 : seg = 7'b0000100;
+            default : seg = 7'b1111111; 
+        endcase
+    end
+    
+endmodule
+
 #module to Display the digits in the four Seven Segment Display.
 
 module Seven_Segment_Driver(
@@ -51,6 +78,12 @@ module Seven_Segment_Driver(
     reg [12:0] segclk;//helps in turning of all the segments 
     parameter LEFT=2'b00,MIDLEFT=2'b01,MIDRIGHT=2'b10,RIGHT=2'b11;
     reg [1:0]state=LEFT;
+
+Decoder_7_Segment(in1,seg1);
+Decoder_7_Segment(in2,seg2);
+Decoder_7_Segment(in3,seg3);
+Decoder_7_Segment(in4,seg4);
+
     always @(posedge clk)
     segclk<=segclk+1;
     always @(posedge segclk[12],posedge clr)
@@ -94,14 +127,12 @@ module Seven_Segment_Driver(
     endcase
 end
 end
-Decoder_7_Segment(in1,seg1);
-Decoder_7_Segment(in2,seg2);
-Decoder_7_Segment(in3,seg3);
-Decoder_7_Segment(in4,seg4);    
+   
     
     endmodule
 
-#Vending Machine 
+
+##Vending Machine 
 
 module Vending_machine(
     input clk,
@@ -134,7 +165,7 @@ module Vending_machine(
      
     if (reset)
     money=0;
-    else if (quater_prev==0 &&quater==1)
+    else if (quater_prev==0 && quater==1)
     money<=money+25;
      else if (dollar_prev==0 && dollar==1)
     money<=money+25;
@@ -169,9 +200,9 @@ module Vending_machine(
     stock3<=(stock3)-1'b1;
     product[3]<=1;
     end
-    
     endcase
-    else if(buy_prev==1 && buy==0)
+   
+else if(buy_prev==1 && buy==0)
     begin 
     product[0]=0;
     product[1]=0;
@@ -179,8 +210,7 @@ module Vending_machine(
     product[3]=0;
     end 
     
-    
-    else 
+ else 
     begin 
     if(stock0==0)
     out_of_stock[0]=1;
@@ -208,7 +238,7 @@ module Vending_machine(
     endcase 
       end  
 endmodule
-#TOP MODULE ALL TOGETHER
+#TOP MODULE (ALL TOGETHER)
 module Top_Module(
     input clk,
     input btnU,//reset
