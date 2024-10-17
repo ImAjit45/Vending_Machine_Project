@@ -25,7 +25,7 @@ Decoder_7_Segment(in4,seg4);
     if (clr)
     begin
     seg<=0000000;
-    an<=4'b0000;
+    an<=4'b1111;
     state<=LEFT;
     end 
    else
@@ -43,3 +43,16 @@ Decoder_7_Segment(in4,seg4);
      an<=4'b1011;
      state<=MIDRIGHT;
      end
+         MIDRIGHT:
+     begin
+     seg<=seg3;
+     an<=4'b1101;
+     state<=RIGHT;
+     end
+         RIGHT:
+     begin
+     seg<=seg4;
+     an<=4'b1110;
+     state<=LEFT;
+     end
+       endmodule
