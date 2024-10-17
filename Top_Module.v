@@ -4,14 +4,13 @@ module Top_Module(
     input btnC,//buy
     input btnR,//quater
     input btnL,//dollar
-    input [7:0] sw,//pehla 4 slect karne ke liye ,baki char load karne ke liye
-    output [7:0] led,//pehla char konsa select hua he boh dikhayega,next 4 out  of stock ko dikhata he
-    output  [6:0] seg,//display wla
-    output   [3:0] an//konsa segment use horaha he 4 mein se//anode control
+    input [7:0] sw,//first  4 for selecting item ,remaining 4  for loading
+    output [7:0] led,//first 4 to show which item is selected ,next 4 to show out  of stock item.
+    output  [6:0] seg,//display 
+    output   [3:0] an//for chosing segments from the four available display
     
     );
-    wire [11:0] money;//pesa kitna dala
-    
+    wire [11:0] money;//amount of money put in the device
     
     wire deb_btnC,deb_btnR,deb_btnL,deb_btnU;
     Debounce    dbnU(clk,btnC,deb_btnU);
